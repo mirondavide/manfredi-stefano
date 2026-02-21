@@ -361,13 +361,18 @@
 
   <!-- Navbar -->
   <header class="navbar">
-    <a href="#" class="logo">Manfredi Stefano</a>
-    <nav>
-      <a href="#chi-siamo">Chi Siamo</a>
-      <a href="#servizi">Servizi</a>
-      <a href="#orari">Orari</a>
-      <a href="#contatti">Contatti</a>
-    </nav>
+    <div class="navbar-inner">
+      <a href="#hero" class="logo navbar-brand">Manfredi Stefano</a>
+      <nav class="navbar-links">
+        <a href="#chi-siamo">Chi Siamo</a>
+        <a href="#servizi">Servizi</a>
+        <a href="#orari">Orari</a>
+        <a href="#contatti">Contatti</a>
+      </nav>
+      <button class="menu-toggle" type="button" aria-label="Apri menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </header>
 
   <!-- Hero -->
@@ -596,5 +601,64 @@
   </footer>
 
   <script src="../js/main.js"></script>
+  <script>
+  (function(){
+    // Mobile menu toggle
+    var toggle = document.querySelector('.menu-toggle');
+    var nav = document.querySelector('.navbar-links');
+    if(toggle && nav){
+      toggle.addEventListener('click',function(){
+        toggle.classList.toggle('active');
+        nav.classList.toggle('active');
+        document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
+      });
+      nav.querySelectorAll('a').forEach(function(l){
+        l.addEventListener('click',function(){
+          toggle.classList.remove('active');
+          nav.classList.remove('active');
+          document.body.style.overflow='';
+        });
+      });
+    }
+    // Navbar scroll
+    var navbar = document.querySelector('.navbar');
+    var backToTop = document.getElementById('backToTop');
+    function onScroll(){
+      var y = window.scrollY||window.pageYOffset;
+      if(y>80) navbar.classList.add('scrolled'); else navbar.classList.remove('scrolled');
+      if(backToTop){ if(y>600) backToTop.classList.add('visible'); else backToTop.classList.remove('visible'); }
+    }
+    window.addEventListener('scroll',onScroll,{passive:true});
+    onScroll();
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener('click',function(e){
+        var id=a.getAttribute('href'); if(!id||id==='#') return;
+        var t=document.querySelector(id); if(!t) return;
+        e.preventDefault();
+        var nh=navbar?navbar.offsetHeight:0;
+        window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-nh,behavior:'smooth'});
+      });
+    });
+    // Reveal animations
+    var els=document.querySelectorAll('.animate-on-scroll,.section-title,.about,.menu-category,.service-item,.contact-item,.map-container,.hours-table');
+    if(els.length){
+      var obs=new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }});
+      },{rootMargin:'0px 0px -80px 0px',threshold:0.1});
+      els.forEach(function(el){ el.classList.add('animate-on-scroll'); obs.observe(el); });
+    }
+    // Back to top
+    var btt=document.createElement('a'); btt.id='backToTop'; btt.className='back-to-top'; btt.href='#hero'; btt.setAttribute('aria-label','Torna in cima'); btt.innerHTML='&#9650;'; document.body.appendChild(btt);
+    // Floating phone
+    var ph=document.getElementById('contatti');
+    if(ph){
+      var txt=ph.textContent||''; var m=txt.replace(/\u00a0/g,' ').match(/(\+?\d[\d\s\-\/]{6,}\d)/);
+      if(m){ var tel=m[1].replace(/[^+\d]/g,'');
+        var fl=document.createElement('a'); fl.className='floating-phone'; fl.href='tel:'+tel; fl.setAttribute('aria-label','Chiama'); fl.innerHTML='&#9742;<span class="phone-tooltip">Chiama: '+m[1].trim()+'</span>'; document.body.appendChild(fl);
+      }
+    }
+  })();
+  </script>
 </body>
 </html>
