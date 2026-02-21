@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manfredi Stefano - Idraulico a Parma</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* Override global burgundy theme with blue/steel for plumbing */
+    :root {
+      --burgundy: #1a3a5c;
+      --burgundy-dark: #0f2640;
+      --burgundy-deep: #0a1628;
+      --gold: #4a9ece;
+      --gold-light: #6db8e0;
+      --tan: #7babc7;
+      --tan-light: #a8cedf;
+      --shadow: rgba(15, 38, 64, 0.15);
+      --shadow-dark: rgba(0, 0, 0, 0.3);
+    }
+
+    .navbar.scrolled::before {
+      background: rgba(10, 22, 40, 0.97);
+    }
+
+    .qualita {
+      background: linear-gradient(160deg, #0a1628 0%, #132848 40%, #1a3a5c 100%);
+    }
+
+    .floating-phone {
+      background: linear-gradient(135deg, #1a3a5c, #0f2640);
+      box-shadow: 0 4px 20px rgba(26, 58, 92, 0.5);
+    }
+
+    ::selection {
+      background: rgba(74, 158, 206, 0.25);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #1a3a5c;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #0f2640;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #1a3a5c, #0f2640);
+      border-color: #1a3a5c;
+      box-shadow: 0 4px 20px rgba(26, 58, 92, 0.4);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #245a80, #1a3a5c);
+    }
+
+    /* ---------- Hero layout ---------- */
+    .hero-manfredi {
+      background: linear-gradient(160deg, #0a1628 0%, #132848 30%, #1a3a5c 55%, #0d2137 100%);
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 140px 24px 100px;
+    }
+    .hero-manfredi::before {
+      background:
+        radial-gradient(ellipse at 25% 45%, rgba(26, 58, 92, 0.5) 0%, transparent 60%),
+        radial-gradient(ellipse at 75% 25%, rgba(74, 158, 206, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 85%, rgba(10, 22, 40, 0.6) 0%, transparent 55%);
+    }
+    .hero-manfredi::after { opacity: 0.02; }
+
+    .hero-badge {
+      display: inline-block;
+      border: 1px solid rgba(74, 158, 206, 0.4);
+      color: rgba(255,255,255,0.85);
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      padding: 10px 28px;
+      border-radius: 999px;
+      margin-bottom: 28px;
+      animation: fadeInUp 0.9s ease 0.15s both;
+    }
+
+    .hero-manfredi h1 {
+      font-size: clamp(2.8rem, 6vw, 4.8rem);
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+      animation: fadeInUp 0.9s ease 0.3s both;
+    }
+    .hero-manfredi h1 .hero-initial {
+      color: var(--gold);
+      font-size: 1.15em;
+    }
+
+    .hero-tagline {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      color: rgba(255,255,255,0.7);
+      margin-top: 12px;
+      animation: fadeInUp 0.9s ease 0.45s both;
+    }
+
+    .hero-manfredi .hero-desc {
+      max-width: 620px;
+      margin: 18px auto 0;
+      font-size: 1.02rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.8;
+      animation: fadeInUp 0.9s ease 0.55s both;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 34px;
+      animation: fadeInUp 0.9s ease 0.7s both;
+    }
+    .hero-btns .btn-filled {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: #0a1628;
+    }
+    .hero-btns .btn-filled:hover {
+      background: var(--gold-light);
+      border-color: var(--gold-light);
+      transform: translateY(-2px);
+    }
+    .hero-btns .btn-outline {
+      border-color: rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.9);
+    }
+    .hero-btns .btn-outline:hover {
+      border-color: #fff;
+      color: #fff;
+      background: rgba(255,255,255,0.06);
+    }
+
+    /* Scroll indicator */
+    .hero-scroll {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.35);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      animation: fadeIn 1s ease 1.1s both;
+    }
+    .hero-scroll-line {
+      width: 20px;
+      height: 20px;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      position: relative;
+    }
+    .hero-scroll-line::after {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 6px;
+      background: rgba(255,255,255,0.5);
+      border-radius: 2px;
+      animation: scrollDown 1.6s ease infinite;
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 480px) {
+      .hero-manfredi { padding: 120px 16px 90px; }
+      .hero-btns { flex-direction: column; align-items: stretch; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <a href="#" class="logo">Manfredi Stefano</a>
+    <nav>
+      <a href="#chi-siamo">Chi Siamo</a>
+      <a href="#servizi">Servizi</a>
+      <a href="#orari">Orari</a>
+      <a href="#contatti">Contatti</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero hero-manfredi">
+    <div class="hero-badge">Idraulico &bull; Lattoniere &bull; Parma</div>
+    <h1><span class="hero-initial">M</span>anfredi Stefano</h1>
+    <p class="hero-tagline">La tua sicurezza, la nostra competenza</p>
+    <p class="hero-desc">Impianti idraulici, riscaldamento e lattoneria. Soluzioni affidabili per la casa e il lavoro dal cuore di Parma.</p>
+    <div class="hero-btns">
+      <a href="#contatti" class="btn btn-filled">Richiedi Preventivo</a>
+      <a href="#servizi" class="btn btn-outline">I Nostri Servizi</a>
+    </div>
+    <div class="hero-scroll">
+      Scopri di pi&ugrave;
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a> / <a href="#">Servizi</a> / Manfredi Stefano
+  </div>
+
+  <!-- Chi Siamo -->
+  <section class="section" id="chi-siamo">
+    <div class="about">
+      <div class="about-text">
+        <h2>Esperienza e Professionalit&agrave; al Vostro Servizio</h2>
+        <p>La ditta Manfredi Stefano &egrave; un punto di riferimento a Parma per i servizi idraulici e di lattoneria. Situati in Via Emilio Maccolini 3, operiamo nel quartiere e in tutta la citt&agrave; con competenza e seriet&agrave;.</p>
+        <p>Offriamo soluzioni complete per impianti idraulici civili e industriali: dalla progettazione all'installazione, dalla manutenzione ordinaria agli interventi di emergenza. Ogni lavoro viene eseguito con materiali di qualit&agrave; e nel rispetto delle normative vigenti.</p>
+        <p>La soddisfazione del cliente &egrave; la nostra priorit&agrave;. Per questo garantiamo interventi rapidi, preventivi trasparenti e un'assistenza puntuale prima, durante e dopo ogni lavoro.</p>
+      </div>
+      <div class="about-img">🔧</div>
+    </div>
+  </section>
+
+  <!-- Servizi -->
+  <section class="section" id="servizi">
+    <h2 class="section-title">I Nostri Servizi</h2>
+    <div class="services-grid">
+      <div class="service-item">
+        <div class="service-icon">🚿</div>
+        <h3>Impianti Idraulici</h3>
+        <p>Installazione e manutenzione di impianti idraulici per bagni, cucine e lavanderie</p>
+      </div>
+      <div class="service-item">
+        <div class="service-icon">🔥</div>
+        <h3>Riscaldamento</h3>
+        <p>Impianti di riscaldamento, caldaie, termosifoni e sistemi a pavimento</p>
+      </div>
+      <div class="service-item">
+        <div class="service-icon">🏠</div>
+        <h3>Ristrutturazioni</h3>
+        <p>Rifacimento completo di bagni e impianti durante lavori di ristrutturazione</p>
+      </div>
+      <div class="service-item">
+        <div class="service-icon">🚰</div>
+        <h3>Riparazioni Urgenti</h3>
+        <p>Interventi rapidi per perdite, scarichi intasati e guasti agli impianti</p>
+      </div>
+      <div class="service-item">
+        <div class="service-icon">🏗️</div>
+        <h3>Lattoneria</h3>
+        <p>Grondaie, pluviali, scossaline e lavorazioni in lamiera per coperture</p>
+      </div>
+      <div class="service-item">
+        <div class="service-icon">📋</div>
+        <h3>Preventivi Gratuiti</h3>
+        <p>Sopralluoghi e preventivi dettagliati senza impegno per ogni tipo di intervento</p>
+      </div>
+    </div>
+
+    <h2 class="section-title" style="margin-top: 3rem;">Interventi e Prezzi Indicativi</h2>
+    <div class="menu-grid">
+      <div class="menu-category">
+        <h3>Riparazioni</h3>
+        <div class="menu-item">
+          <span class="name">Riparazione perdita rubinetto</span>
+          <span class="price">da &euro; 50,00</span>
+        </div>
+        <div class="menu-item">
+          <span class="name">Disostruzione scarico</span>
+          <span class="price">da &euro; 80,00</span>
+        </div>
+        <div class="menu-item">
+          <span class="name">Sostituzione rubinetteria</span>
+          <span class="price">da &euro; 90,00</span>
+        </div>
+        <div class="menu-item">
+          <span class="name">Riparazione cassetta WC</span>
+          <span class="price">da &euro; 60,00</span>
+        </div>
+        <div class="menu-item">
+          <span class="name">Intervento urgente</span>
+          <span class="price">da &euro; 100,00</span>
+        </div>
+      </div>
+      <div class="menu-category">
+        <h3>Installazioni</h3>
+        <div class="menu-item">
+          <span class="name">Installazione sanitari</span>
+          <span class="price">da &euro; 150,00</span>
+        </div>
+        <div class="menu-item">
+          <span class="name">Installazione caldaia</span>
+          <span class="price">da &euro; 350,00</span>
+        </div>
+        <div class="menu-item">
+          <span class="name">Installazione scaldabagno</span>
+          <span class="price">da &euro; 180,00</span>
+        </div>
+        <div class="menu-item">
+          <span class="name">Installazione lavatrice/lavastoviglie</span>
+          <span class="price">da &euro; 70,00</span>
+        </div>
+        <div class="menu-item">
+          <span class="name">Posa piatto doccia</span>
+          <span class="price">da &euro; 200,00</span>
+        </div>
+      </div>
+      <div class="menu-category">
+        <h3>Lattoneria</h3>
+        <div class="menu-item">
+          <span class="name">Sostituzione grondaia (al metro)</span>
+          <span class="price">da &euro; 35,00</span>
+        </div>
+        <div class="menu-item">
+          <span class="name">Riparazione pluviale</span>
+          <span class="price">da &euro; 80,00</span>
+        </div>
+        <div class="menu-item">
+          <span class="name">Installazione scossaline</span>
+          <span class="price">da &euro; 45,00</span>
+        </div>
+        <div class="menu-item">
+          <span class="name">Sopralluogo e preventivo</span>
+          <span class="price">Gratuito</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Orari -->
+  <section class="section" id="orari">
+    <h2 class="section-title">Orari di Apertura</h2>
+    <div style="max-width: 600px; margin: 0 auto;">
+      <table class="hours-table">
+        <thead>
+          <tr>
+            <th>Giorno</th>
+            <th>Mattina</th>
+            <th>Pomeriggio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Luned&igrave;</td><td>08:00 - 12:00</td><td>14:00 - 18:00</td></tr>
+          <tr><td>Marted&igrave;</td><td>08:00 - 12:00</td><td>14:00 - 18:00</td></tr>
+          <tr><td>Mercoled&igrave;</td><td>08:00 - 12:00</td><td>14:00 - 18:00</td></tr>
+          <tr><td>Gioved&igrave;</td><td>08:00 - 12:00</td><td>14:00 - 18:00</td></tr>
+          <tr><td>Venerd&igrave;</td><td>08:00 - 12:00</td><td>14:00 - 18:00</td></tr>
+          <tr><td>Sabato</td><td>08:00 - 12:00</td><td>Chiuso</td></tr>
+          <tr><td>Domenica</td><td colspan="2">Chiuso</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Contatti -->
+  <section class="contact-section" id="contatti">
+    <h2>Contatti</h2>
+    <div class="contact-grid">
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div>
+          <h3>Indirizzo</h3>
+          <p>Via Emilio Maccolini, 3 - 43123 Parma</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div>
+          <h3>Telefono</h3>
+          <p>0521 482145</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📧</div>
+        <div>
+          <h3>Email</h3>
+          <p>rossella.lesto@zanardistefano.it</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🕐</div>
+        <div>
+          <h3>Orari</h3>
+          <p>Lun-Ven 08:00-18:00 / Sab 08:00-12:00</p>
+        </div>
+      </div>
+    </div>
+    <div class="map-container">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2839.5!2d10.3394!3d44.7862!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sVia+Emilio+Maccolini%2C+3%2C+43123+Parma+PR!5e0!3m2!1sit!2sit!4v1700000000000" width="100%" height="300" style="border:0; border-radius: 6px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </section>
+
+  <!-- Pricing CTA -->
+  <section class="section" id="preventivo" style="padding-bottom: 60px;">
+    <div style="max-width: 480px; margin: 0 auto; background: linear-gradient(135deg, #0f2640, #1a3a5c); border-radius: 12px; padding: 48px 36px; text-align: center; box-shadow: 0 20px 60px rgba(10,22,40,0.3);">
+      <p style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 2.5px; color: rgba(255,255,255,0.5); margin-bottom: 8px;">Il tuo sito web professionale</p>
+      <div style="font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 800; color: #fff; line-height: 1;">&euro;300</div>
+      <p style="color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 4px;">una tantum &bull; nessun abbonamento</p>
+      <ul style="list-style: none; margin: 28px 0; text-align: left; display: inline-block;">
+        <li style="color: rgba(255,255,255,0.8); padding: 6px 0; font-size: 0.95rem;">&#10003; &nbsp;Design personalizzato e responsive</li>
+        <li style="color: rgba(255,255,255,0.8); padding: 6px 0; font-size: 0.95rem;">&#10003; &nbsp;Ottimizzazione SEO</li>
+        <li style="color: rgba(255,255,255,0.8); padding: 6px 0; font-size: 0.95rem;">&#10003; &nbsp;Consegna in 7 giorni</li>
+        <li style="color: rgba(255,255,255,0.8); padding: 6px 0; font-size: 0.95rem;">&#10003; &nbsp;Supporto post-lancio incluso</li>
+      </ul>
+      <a href="mailto:davidemiron30@gmail.com?subject=Richiesta%20sito%20web&body=Ciao%2C%20sono%20interessato%20alla%20realizzazione%20di%20un%20sito%20web." class="btn" style="width: 100%; background: #4a9ece; border-color: #4a9ece; color: #0a1628; font-size: 0.9rem; margin-top: 8px;">Contattami via Email</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 Manfredi Stefano - Via Emilio Maccolini, 3 - 43123 Parma</p>
+    <p>Sito realizzato nell'ambito del <a href="../index.html">Progetto ITIS Leonardo da Vinci Parma</a></p>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
